@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Earnings and Expenses Tracker</title>
+</head>
+<body>
+
+    <h2>Earnings and Expenses Tracker</h2>
+    <input type="number" id="valueInput" placeholder="Enter earning (+) or expense (-)">
+    <button onclick="addTransaction()">Add</button>
+
+    <h3>Earnings: <span id="totalEarnings">0</span></h3>
+    <ul id="earningsList"></ul>
+
+    <h3>Expenses: <span id="totalExpenses">0</span></h3>
+    <ul id="expensesList"></ul>
+
+    <h3>Balance: <span id="balance">0</span></h3>
+
+<script>
+    let earnings = [], expenses = [];
+
+    function addTransaction() {
+        const value = parseFloat(document.getElementById("valueInput").value);
+        if (isNaN(value)) return alert("Please enter a valid number");
+
+        value > 0 ? earnings.push(value) : expenses.push(value);
+        document.getElementById("valueInput").value = '';
+        updateUI();
+    }
+
+    function updateUI() {
+        const sum = arr => arr.reduce((a, b) => a + b, 0);
+        document.getElementById("totalEarnings").textContent = sum(earnings).toFixed(2);
+        document.getElementById("totalExpenses").textContent = sum(expenses).toFixed(2);
+        document.getElementById("balance").textContent = (sum(earnings) + sum(expenses)).toFixed(2);
+
+        document.getElementById("earningsList").innerHTML = earnings.map(e => `<li>${e}</li>`).join('');
+        document.getElementById("expensesList").innerHTML = expenses.map(e => `<li>${e}</li>`).join('');
+    }
+</script>
+
+</body>
+</html>
